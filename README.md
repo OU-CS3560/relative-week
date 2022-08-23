@@ -10,6 +10,14 @@ How many weeks have passed since date X?
 - [ ] Show the dates that begins and ends the week (sun-sat).
 - [ ] Show a week number relative to the given starting date.
 
+## Design Note
+
+### Previous Implementation
+
+https://github.com/krerkkiat/functions/tree/main/week-in-semester was for GCP's Cloud Functions.
+
+### Obtaining the start date of a semester
+
 https://developer.localist.com/doc/api#event-search
 
 Original request on the academic calendar page for fall semester 2022-23
@@ -78,3 +86,8 @@ jq ".events[] | .event.title"
 ```console
 curl 'https://calendar.ohio.edu/api/2/events?group_id=32680652852643&keyword[]=academic%20year%202021-22&keyword[]=summer%201st%20session&keyword[]=summer%202nd%20session&keyword[]=summer%20full%20semester&days=365&pp=100' --globoff -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0' -H 'Accept: */*' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Origin: https://www.ohio.edu' -H 'Connection: keep-alive' -H 'Referer: https://www.ohio.edu/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'TE: trailers'
 ```
+
+### Badge Generation
+
+- https://shields.io/endpoint
+- Cloudflare worker CLI https://developers.cloudflare.com/workers/wrangler/
