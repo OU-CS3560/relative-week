@@ -12,6 +12,19 @@ Note that the genesis data has to start on Sunday of the first week, otherwise, 
 npm install
 ```
 
+## Production Deployment
+
+```console
+gcloud functions deploy relative-week \
+        --gen2 \
+        --runtime=nodejs16 \
+        --region=<region> \
+        --source=. \
+        --entry-point=relativeWeek \
+        --trigger-http \
+        --allow-unauthenticated
+```
+
 ## Local Development
 
 ``` console
