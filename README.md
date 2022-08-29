@@ -1,6 +1,6 @@
-# Weeks
+# Relative Week
 
-How many weeks have passed since date X?
+An API endpoint that display a number of week since an arbitary date. It also support a response format that is used by Shields.io.
 
 ## Note
 
