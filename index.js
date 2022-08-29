@@ -1,13 +1,11 @@
-var differenceInWeeks = require('date-fns/differenceInWeeks');
+var { getRelativeWeek } = require('./functions');
 
 exports.relativeWeek = (req, res) => {
-    const genesisDate = new Date('August 22, 2022');
+    const genesisDate = new Date('August 21, 2022');
     const today = new Date();
-    const type = req.query.type || 'ak';
-
-    const numberOfWeeks = differenceInWeeks(today, genesisDate) + 1;
-
     const responseFormat = req.query.format || 'shields-io-json';
+
+    const numberOfWeeks = getRelativeWeek(genesisDate, today);
 
     if (responseFormat === 'json') {
         res.json({"weeks": numberOfWeeks, "genesisDate": genesisDate.toISOString()});

@@ -4,6 +4,30 @@
 
 An API endpoint that display a number of week since an arbitrary date. It also support a response format that is used by Shields.io.
 
+Note that the genesis data has to start on Sunday of the first week, otherwise, the next Sunday will still be counted as the first week.
+
+## Dependencies
+
+``` console
+npm install
+```
+
+## Local Development
+
+``` console
+npm run start
+```
+
+``` console
+curl http://127.0.0.1:8080/
+```
+
+## Test
+
+``` console
+npm test
+```
+
 ## Note
 
 ### Features
