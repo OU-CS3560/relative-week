@@ -1,3 +1,5 @@
+[![Relative Week](https://img.shields.io/endpoint?url=https://relative-week-nqi7uqnvwa-uk.a.run.app)](https://img.shields.io/endpoint?url=https://relative-week-nqi7uqnvwa-uk.a.run.app)
+
 # Relative Week
 
 An API endpoint that display a number of week since an arbitary date. It also support a response format that is used by Shields.io.
