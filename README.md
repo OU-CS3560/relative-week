@@ -1,4 +1,4 @@
-[![Relative Week](https://img.shields.io/endpoint?url=https://relative-week-nqi7uqnvwa-uk.a.run.app)](https://img.shields.io/endpoint?url=https://relative-week-nqi7uqnvwa-uk.a.run.app)
+[![Relative Week](https://img.shields.io/endpoint?url=https://relative-week-ksraqzy7na-uk.a.run.app)](https://img.shields.io/endpoint?url=https://relative-week-ksraqzy7na-uk.a.run.app)
 
 # Relative Week
 
