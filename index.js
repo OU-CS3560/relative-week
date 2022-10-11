@@ -1,7 +1,8 @@
 var { getRelativeWeek } = require('./functions');
 
 exports.relativeWeek = (req, res) => {
-    const genesisDate = new Date('August 21, 2022');
+    const genesisDateText = decodeURI(req.query.genesisDate || 'August%2021,%202022');
+    const genesisDate = new Date(genesisDateText);
     const today = new Date();
     const responseFormat = req.query.format || 'shields-io-json';
 
