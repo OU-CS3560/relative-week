@@ -51,6 +51,16 @@ npm test
 
 ## Design Note
 
+### Alternative Implementation
+
+```plain
+1. Find the absolute week number of the genesis date -> genesisDateWeeks
+2. Find the absolute week number of today -> todayWeeks
+3. Subtract todayWeeks from genesisDateWeeks
+
+absolute week number is the week number since the beginning of the year.
+```
+
 ### Previous Implementation
 
 https://github.com/krerkkiat/functions/tree/main/week-in-semester was for GCP's Cloud Functions.
