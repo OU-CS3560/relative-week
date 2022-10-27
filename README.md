@@ -65,7 +65,12 @@ absolute week number is the week number since the beginning of the year.
 
 https://github.com/krerkkiat/functions/tree/main/week-in-semester was for GCP's Cloud Functions.
 
-### Obtaining the start date of a semester
+### Obtaining the start date of a semester (from course offerring webapp)
+
+In course offering webapp, the CS 3560 will have its own starting date listed. The webapp seems to have internal search API
+that it is using already. If we can directly use this API, we should be reliably able to get the starting date.
+
+### Obtaining the start date of a semester (from academic calendar)
 
 https://developer.localist.com/doc/api#event-search
 
