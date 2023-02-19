@@ -17,7 +17,7 @@ npm install
 ```console
 gcloud functions deploy relative-week \
         --gen2 \
-        --runtime=nodejs16 \
+        --runtime=nodejs18 \
         --region=<region> \
         --source=. \
         --entry-point=relativeWeek \

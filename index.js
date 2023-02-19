@@ -1,6 +1,8 @@
+
+const functions = require('@google-cloud/functions-framework');
 var { getRelativeWeek } = require('./functions');
 
-exports.relativeWeek = (req, res) => {
+functions.http('relativeWeek', (req, res) => {
     const genesisDateText = decodeURI(req.query.genesisDate || 'August%2021,%202022');
     const genesisDate = new Date(genesisDateText);
     const today = new Date();
@@ -16,4 +18,4 @@ exports.relativeWeek = (req, res) => {
         // Assume plain text response.
         res.send(`this is week ${numberOfWeeks} relative to the genesis date`);
     }
-};
+});
