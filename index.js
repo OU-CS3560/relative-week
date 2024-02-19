@@ -10,6 +10,18 @@ functions.http("relativeWeek", (req, res) => {
   const genesisDate = DateTime.fromISO(genesisDateText, { zone: timezoneName });
   const today = DateTime.local().setZone(timezoneName);
 
+  if (!genesisDate.isValid) {
+    res.json({
+      schemaVersion: 1,
+      label: "week (error)",
+      message: `Invalid date. Please use an ISO date format. E.g. 2024-01-15`,
+      labelColor: "red",
+      color: "grey",
+      style: "for-the-badge",
+    });
+    return;
+  }
+
   const numberOfWeeks = getRelativeWeek(genesisDate, today);
 
   if (responseFormat === "shields-io-json") {

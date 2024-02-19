@@ -15,7 +15,14 @@ To include this in your Blackboard course, in the content editor, click "Edit so
 To include the badge in a markdown file on GitHub, add
 
 ```markdown
-[![Relative Week](https://img.shields.io/endpoint?url=https://relative-week-ksraqzy7na-uk.a.run.app?genesisDate=2024-01-15)](https://github.com/OU-CS3560/relative-week)
+![Relative Week](https://img.shields.io/endpoint?url=https://relative-week-ksraqzy7na-uk.a.run.app?genesisDate=2024-01-15)
+```
+
+Note that any parameter for Shields.io can be overwritten. For example, if you want to remove the word "(relative)" from the
+label, you can provide your own label.
+
+```markdown
+![Relative Week](https://img.shields.io/endpoint?label=Week&url=https://relative-week-ksraqzy7na-uk.a.run.app?genesisDate=2024-01-15)
 ```
 
 ## Parameters
