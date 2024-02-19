@@ -3,8 +3,8 @@ const { DateTime } = require("luxon");
 const { getRelativeWeek } = require("./functions");
 
 functions.http("relativeWeek", (req, res) => {
-  const genesisDateText = decodeURI(req.query.genesisDate || "2024-01-15");
-  const timezoneName = decodeURI(req.query.tz || "America%2FNew_York");
+  const genesisDateText = req.query.genesisDate || "2024-01-15";
+  const timezoneName = decodeURIComponent(req.query.tz || "America%2FNew_York");
   const responseFormat = req.query.format || "shields-io-json";
 
   const genesisDate = DateTime.fromISO(genesisDateText, { zone: timezoneName });
