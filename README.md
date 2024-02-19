@@ -2,9 +2,13 @@
 
 # Relative Week
 
-An API endpoint that display a number of week since an arbitrary date. It also support a response format that is used by Shields.io.
+An API endpoint that display a number of week since an arbitrary date. It also support a response format that is used by [Shields.io](https://shields.io/endpoint).
 
-Note that the genesis data has to start on Sunday of the first week, otherwise, the next Sunday will still be counted as the first week.
+### Parameters
+
+- `genesisDate` An ISO format date that represent the staring point. Note that we use week number of [ISO Week Date](https://en.wikipedia.org/wiki/ISO_week_date) internally. Note that the week starts on Monday and ends on Sunday. Default value is `2024-01-15` (15 January 2024).
+- `tz` An [IANA timezone name](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Default value is `America/New_York`.
+- `format` The output format the function will response in. Choices of `shields-io-json`, `json` or `text`. The first is meant to be used with [Shields.io](https://shields.io/endpoint) while the 2nd outputs more information for debugging. The last format is just a plain text response.
 
 ## Dependencies
 
@@ -28,7 +32,7 @@ gcloud functions deploy relative-week \
 ## Local Development
 
 ``` console
-npm run start
+npm run dev
 ```
 
 ``` console
@@ -40,108 +44,3 @@ curl http://127.0.0.1:8080/
 ``` console
 npm test
 ```
-
-## Note
-
-### Features
-
-- [ ] Obtain semester start date from the academic calendar.
-- [ ] Show the dates that begins and ends the week (sun-sat).
-- [ ] Show a week number relative to the given starting date.
-
-## Design Note
-
-### Alternative Implementation
-
-```plain
-1. Find the absolute week number of the genesis date -> genesisDateWeeks
-2. Find the absolute week number of today -> todayWeeks
-3. Subtract todayWeeks from genesisDateWeeks
-
-absolute week number is the week number since the beginning of the year.
-```
-
-### Previous Implementation
-
-https://github.com/krerkkiat/functions/tree/main/week-in-semester was for GCP's Cloud Functions.
-
-### Obtaining the start date of a semester (from course offerring webapp)
-
-In course offering webapp, the CS 3560 will have its own starting date listed. The webapp seems to have internal search API
-that it is using already. If we can directly use this API, we should be reliably able to get the starting date.
-
-### Obtaining the start date of a semester (from academic calendar)
-
-https://developer.localist.com/doc/api#event-search
-
-Original request on the academic calendar page for fall semester 2022-23
-
-```console
-YEAR_START=2022-01-01
-YEAR=2022-23
-KEYWORDS="&keyword[]=academic%20year%20${YEAR}&keyword[]=fall%20semester"
-curl "https://calendar.ohio.edu/api/2/events?group_id=32680652852643&${KEYWORDS}require_all=true&days=365&pp=100&start=${YEAR_START}" \
---globoff -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0' \
--H 'Accept: */*' -H 'Accept-Language: en-US,en;q=0.5' \
---compressed -H 'Origin: https://www.ohio.edu' -H 'Connection: keep-alive' \
--H 'Referer: https://www.ohio.edu/' -H 'Sec-Fetch-Dest: empty' \
--H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H 'Pragma: no-cache' \
--H 'Cache-Control: no-cache' | \
-jq ".events[] | .event.title"
-```
-
-Original request on the academic calendar page for full summer semester 2021-22.
-
-```console
-YEAR_START=2022-01-01
-YEAR=2021-22
-KEYWORDS="&keyword[]=academic%20year%20${YEAR}&keyword[]=summer%201st%20session&keyword[]=summer%202nd%20session&keyword[]=summer%20full%20semester"
-curl "https://calendar.ohio.edu/api/2/events?group_id=32680652852643${KEYWORDS}&require_all=true&days=365&pp=100&start=${YEAR_START}" \
---globoff -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0' \
--H 'Accept: */*' -H 'Accept-Language: en-US,en;q=0.5' \
---compressed -H 'Origin: https://www.ohio.edu' -H 'Connection: keep-alive' \
--H 'Referer: https://www.ohio.edu/' -H 'Sec-Fetch-Dest: empty' \
--H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H 'Pragma: no-cache' \
--H 'Cache-Control: no-cache' | \
-jq ".events[] | .event.title"
-```
-
-Attempt to query all four semesters (fall, spring, 1st semester, 2nd semester). The `require_all=true` filters only event with all the keywords.
-
-```console
-YEAR_START=2021-08-01
-YEAR=2021-22
-KEYWORDS="&keyword[]=academic%20year%20${YEAR}&keyword[]=fall%20semester&keyword[]=spring%20semester&keyword[]=summer%201st%20session&keyword[]=summer%202nd%20session&keyword[]=summer%20full%20semester"
-curl "https://calendar.ohio.edu/api/2/events?group_id=32680652852643&${KEYWORDS}&days=365&pp=200&start=${YEAR_START}" \
---globoff -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0' \
--H 'Accept: */*' -H 'Accept-Language: en-US,en;q=0.5' \
---compressed -H 'Origin: https://www.ohio.edu' -H 'Connection: keep-alive' \
--H 'Referer: https://www.ohio.edu/' -H 'Sec-Fetch-Dest: empty' \
--H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H 'Pragma: no-cache' \
--H 'Cache-Control: no-cache' | \
-jq ".events[] | .event.title"
-```
-
-Search it with `semester opening date`
-
-```console
-YEAR_START=2021-07-01
-KEYWORD="opening%20date"
-curl "https://calendar.ohio.edu/api/2/events/search?search=${KEYWORD}&group_id=32680652852643&days=365&pp=100&start=${YEAR_START}" \
---globoff -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0' \
--H 'Accept: */*' -H 'Accept-Language: en-US,en;q=0.5' \
---compressed -H 'Origin: https://www.ohio.edu' -H 'Connection: keep-alive' \
--H 'Referer: https://www.ohio.edu/' -H 'Sec-Fetch-Dest: empty' \
--H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H 'Pragma: no-cache' \
--H 'Cache-Control: no-cache' | \
-jq ".events[] | .event.title"
-```
-
-```console
-curl 'https://calendar.ohio.edu/api/2/events?group_id=32680652852643&keyword[]=academic%20year%202021-22&keyword[]=summer%201st%20session&keyword[]=summer%202nd%20session&keyword[]=summer%20full%20semester&days=365&pp=100' --globoff -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0' -H 'Accept: */*' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Origin: https://www.ohio.edu' -H 'Connection: keep-alive' -H 'Referer: https://www.ohio.edu/' -H 'Sec-Fetch-Dest: empty' -H 'Sec-Fetch-Mode: cors' -H 'Sec-Fetch-Site: same-site' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -H 'TE: trailers'
-```
-
-### Badge Generation
-
-- https://shields.io/endpoint
-- Cloudflare worker CLI https://developers.cloudflare.com/workers/wrangler/
